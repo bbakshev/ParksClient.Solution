@@ -22,5 +22,25 @@ namespace ParksClient.Controllers
             Park.Post(park);
             return RedirectToAction("Index");
         }
+
+        public ActionResult Details(int id)
+        {
+            Park park = Park.GetDetails(id);
+            return View(park);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            Park park = Park.GetDetails(id);
+            return View(park);
+        }
+        [HttpPost]
+        public ActionResult Edit(Park park)
+        {
+            Park.Put(park);
+            return RedirectToAction("Index", new { id = park.ParkId });
+        }
+
+        
     }
 }
