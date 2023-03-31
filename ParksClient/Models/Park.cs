@@ -13,22 +13,22 @@ namespace ParksClient.Models
     public string Description { get; set; }
     public string Established { get; set; }
 
-    public static Park[] GetParks()
+    public static List<Park> GetParks()
     {
       Task<string> apiCallTask = ApiHelper.ApiCall();
       string result = apiCallTask.Result;
 
-      JObject jsonResponse = JObject.Parse(result);
-      List<Park> parkList = JsonConvert.DeserializeObject<List<Park>>(jsonResponse["parks"].ToString());
-      return parkList.ToArray();
+      JArray jsonResponse = JsonConvert.DeserializeObject<JArray>(result);
+      List<Park> parkList = JsonConvert.DeserializeObject<List<Park>>(jsonResponse.ToString());
+      return parkList;
     }
     public static Park GetDetails(int id)
     {
       Task<string> apiCallTask = ApiHelper.Get(id);
       string result = apiCallTask.Result;
 
-      JObject jsonResponse = JObject.Parse(result);
-      Park park = JsonConvert.DeserializeObject<Park>(jsonResponse["parks"].ToString());
+      JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(result);
+      Park park = JsonConvert.DeserializeObject<Park>(jsonResponse.ToString());
       return park;
     }
     public static void Post(Park park)
