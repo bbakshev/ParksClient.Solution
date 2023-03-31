@@ -15,7 +15,7 @@ namespace ParksClient.Models
 
     public static Park[] GetParks()
     {
-      Task<string> apiCallTask = ApiHelper.GetAll();
+      Task<string> apiCallTask = ApiHelper.ApiCall();
       string result = apiCallTask.Result;
 
       JObject jsonResponse = JObject.Parse(result);
@@ -28,7 +28,7 @@ namespace ParksClient.Models
       string result = apiCallTask.Result;
 
       JObject jsonResponse = JObject.Parse(result);
-      Park park = JsonConvert.DeserializeObject<Park>(jsonResponse["park"].ToString());
+      Park park = JsonConvert.DeserializeObject<Park>(jsonResponse["parks"].ToString());
       return park;
     }
     public static void Post(Park park)
