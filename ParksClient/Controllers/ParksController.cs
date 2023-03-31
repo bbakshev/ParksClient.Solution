@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ParksClient.Models;
 
-namespace ParksClient.Controllers
-{
+namespace ParksClient.Controllers;
     public class ParksController : Controller
     {
         public IActionResult Index()
@@ -41,6 +40,16 @@ namespace ParksClient.Controllers
             return RedirectToAction("Index", new { id = park.ParkId });
         }
 
-        
+        public ActionResult Delete(int id)
+        {
+            Park park = Park.GetDetails(id);
+            return View(park);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Park.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
-}
